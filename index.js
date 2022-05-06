@@ -30,6 +30,13 @@ async function run() {
             const query = {_id: ObjectId(id)};
             const supply = await suppliesCollection.findOne(query);
             res.send(supply);
+        });
+
+        // POST
+        app.post('/inventory', async(req,res)=>{
+            const newProduct = req.body;
+            const result = await suppliesCollection.insertOne(newProduct);
+            res.send(result);
         })
     }
     finally {
