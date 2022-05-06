@@ -37,6 +37,14 @@ async function run() {
             const newProduct = req.body;
             const result = await suppliesCollection.insertOne(newProduct);
             res.send(result);
+        });
+
+        // DELETE
+        app.delete('/inventory/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await suppliesCollection.deleteOne(query);
+            res.send(result);
         })
     }
     finally {
