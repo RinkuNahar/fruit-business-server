@@ -17,6 +17,7 @@ async function run() {
     try {
         await client.connect();
         const suppliesCollection = client.db('juicy-warehouse').collection('product');
+        const orderCollection = client.db('juicy-warehouse').collection('order');
 
         app.get('/inventory', async (req, res) => {
             const query = {};
@@ -45,7 +46,15 @@ async function run() {
             const query = {_id: ObjectId(id)};
             const result = await suppliesCollection.deleteOne(query);
             res.send(result);
+        });
+
+        // Order Collection
+        app.post('/order', async(req,res)=>{
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send(result);
         })
+
     }
     finally {
 
